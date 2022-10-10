@@ -158,4 +158,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PterosaurSpawnedTime: 0
   PterosaurDespawnTime: 9
-  PterosaurSpeed: 15
+  PterosaurSpeed: 10
