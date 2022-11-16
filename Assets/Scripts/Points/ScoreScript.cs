@@ -12,7 +12,7 @@ public class ScoreScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+        
     }
 
     // Update is called once per frame
@@ -21,4 +21,11 @@ public class ScoreScript : MonoBehaviour
         Score.text = "Score: " + (int)InitialScore;
         InitialScore += ScoreSum * Time.deltaTime;
     }
+
+    public void BonusPoints()
+    {
+        InitialScore += 50;
+        Destroy(this.gameObject);
+    }
+
 }

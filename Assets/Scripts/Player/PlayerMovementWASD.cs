@@ -8,15 +8,14 @@ public class PlayerMovementWASD : MonoBehaviour
 {
     public int jumpforce = 5;
     public bool isjumping = false;
-    public Text Restart;
-    public Text Instructions;
     public ScoreScript ScoreScript;
+    public float TimeNumber = 1;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        Restart.enabled = false;
-        Instructions.enabled = true;
+        StartCoroutine(WaitSeconds());
     }
 
     // Update is called once per frame
@@ -26,12 +25,14 @@ public class PlayerMovementWASD : MonoBehaviour
         {
             GetComponent<Rigidbody2D>().velocity = new Vector3(0, jumpforce, 0);
             isjumping = true;
+            StopCoroutine("WaitSeconds");
         }
 
         if (Input.GetKeyDown("r"))
         {
             Time.timeScale = 1;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene("Menu"); ;
+            StopCoroutine("WaitSeconds");
 
         }
 
@@ -39,7 +40,21 @@ public class PlayerMovementWASD : MonoBehaviour
         {
             Time.timeScale = 1;
             Application.Quit();
+            StopCoroutine("WaitSeconds");
         }
+
+        Time.timeScale = TimeNumber;
+    }
+
+    private IEnumerator WaitSeconds()
+    {
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(2);
+            TimeNumber += 0.01f;
+        }
+
+
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
@@ -53,8 +68,7 @@ public class PlayerMovementWASD : MonoBehaviour
         if (collision.gameObject.tag == "Obstacle")
         {
             Time.timeScale = 0;
-            Restart.enabled = true;
-            Instructions.enabled = false;
+            SceneManager.LoadScene("Death"); ;
         }
 
     }
