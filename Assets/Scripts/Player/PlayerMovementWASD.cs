@@ -8,16 +8,20 @@ public class PlayerMovementWASD : MonoBehaviour
 {
     public int jumpforce = 5;
     public bool isjumping = false;
-    public ScoreScript ScoreScript;
+    public GameObject ScoreScript;
     public float TimeNumber = 1;
 
     public Animator Animator;
+    public AudioSource JumpSound;
+
+    public Text ScoreText;
 
 
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(WaitSeconds());
+        PlayerPrefs.SetString("currentScore", "0");
     }
 
     // Update is called once per frame
@@ -28,6 +32,7 @@ public class PlayerMovementWASD : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = new Vector3(0, jumpforce, 0);
             isjumping = true;
             Animator.Play("JumpAnim");
+            JumpSound.Play();
             StopCoroutine("WaitSeconds");
         }
 
@@ -71,7 +76,7 @@ public class PlayerMovementWASD : MonoBehaviour
 
         if (collision.gameObject.tag == "Obstacle")
         {
-            Time.timeScale = 0;
+            PlayerPrefs.SetString("currentScore", ScoreText.text);
             SceneManager.LoadScene("Death"); ;
         }
 
