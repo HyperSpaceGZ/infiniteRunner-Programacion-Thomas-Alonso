@@ -11,6 +11,8 @@ public class PlayerMovementWASD : MonoBehaviour
     public ScoreScript ScoreScript;
     public float TimeNumber = 1;
 
+    public Animator Animator;
+
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +27,7 @@ public class PlayerMovementWASD : MonoBehaviour
         {
             GetComponent<Rigidbody2D>().velocity = new Vector3(0, jumpforce, 0);
             isjumping = true;
+            Animator.Play("JumpAnim");
             StopCoroutine("WaitSeconds");
         }
 
@@ -63,6 +66,7 @@ public class PlayerMovementWASD : MonoBehaviour
         if (collision.gameObject.tag == "Floor")
         {
             isjumping = false;
+            Animator.SetBool("IsJumping", false);
         }
 
         if (collision.gameObject.tag == "Obstacle")
